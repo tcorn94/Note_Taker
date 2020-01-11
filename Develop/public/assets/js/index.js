@@ -6,19 +6,27 @@ var $noteList = $(".list-container .list-group");
 
 // activeNote is used to keep track of the note in the textarea
 var activeNote = {};
-
+var serverurl = "http://localhost:3000/api/notes";
 // A function for getting all notes from the db
 var getNotes = function() {
-  return $.ajax({
-    url: "/api/notes",
-    method: "GET"
+  var y =   $.ajax({
+    crossDomain: true,
+    dataType: 'jsonp',
+    url: serverurl,
+    method: "GET",
+    success: function(result)
+    {
+      console.log(result);
+    }
   });
+  //console.log (y);
+  return y;
 };
 
 // A function for saving a note to the db
 var saveNote = function(note) {
   return $.ajax({
-    url: "/api/notes",
+    url: serverurl,
     data: note,
     method: "POST"
   });
@@ -27,7 +35,7 @@ var saveNote = function(note) {
 // A function for deleting a note from the db
 var deleteNote = function(id) {
   return $.ajax({
-    url: "api/notes/" + id,
+    url: serverurl + id,
     method: "DELETE"
   });
 };
@@ -53,8 +61,10 @@ var renderActiveNote = function() {
 var handleNoteSave = function() {
   var newNote = {
     title: $noteTitle.val(),
-    text: $noteText.val()
+    text: $noteText.val(),
+    id:  null
   };
+console.log("saving :" +newNote);
 
   saveNote(newNote).then(function(data) {
     getAndRenderNotes();
@@ -106,6 +116,7 @@ var handleRenderSaveBtn = function() {
 // Render's the list of note titles
 var renderNoteList = function(notes) {
   $noteList.empty();
+  console.log(notes);
 
   var noteListItems = [];
 
@@ -127,8 +138,9 @@ var renderNoteList = function(notes) {
 
 // Gets notes from the db and renders them to the sidebar
 var getAndRenderNotes = function() {
-  return getNotes().then(function(data) {
-    renderNoteList(data);
+  return getNotes().then(x=> {
+    console.log("in get render notes "+x);
+    renderNoteList(x);
   });
 };
 
