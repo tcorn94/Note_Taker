@@ -12,6 +12,7 @@ router.get("/notes", function(req, res){
 });
 
 router.post("/notes", (req, res) => {
+    console.log("hello");
     dbManager
     .addNote(req.body)
     .then((note) => res.json(note))
