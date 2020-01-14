@@ -3,6 +3,7 @@ const fs =  require("fs");
 const path = require("path");
 const apiRoutes = require("./routes/apiRoutes");
 const htmlRoutes = require("./routes/htmlRoutes");
+const jsonstuff = require("./db/db.json");
 
 const app = express();
 

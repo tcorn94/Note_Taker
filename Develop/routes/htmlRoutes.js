@@ -6,7 +6,7 @@ const app = express();
 
 
 
-app.get("/notes", () => {
+app.get("../public/notes", () => {
     res.sendFile(path.join(__dirname, "Develop\public\notes.html"));
 })
 

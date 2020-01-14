@@ -1,7 +1,9 @@
-// const readFileAsync = util.promisify(fs.readFile);
-// const writeFileAsync = util.promisify(fs.writeFile);
 
-// let jsonPage = require("db.json");
+var fs = require("fs");
+var notesList = fs.readFileSync("/db");
+var allNotes = JSON.parse(notesList);
+console.log(notesList);
+
 
 class dbManager {
    
@@ -29,7 +31,7 @@ fs.readFile('db.json', 'utf8', function read(err, notes)
 }
 
 write(note){
-    fs.appendFile('db.json',", \n"+ notes, function (err) {
+    fs.writeFile('db.json',", \n"+ notes, function (err) {
                 if (err) throw err;
                 console.log('Saved!');
               });
